@@ -1,18 +1,25 @@
 {
   "name": "landpage-for-me",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Landing page pessoal de Hélio Vinícius — Desenvolvedor PHP & Laravel",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mystic0112/Landpage-for-me.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "landing-page",
+    "react",
+    "vite",
+    "parallax",
+    "portfolio"
+  ],
+  "author": "Hélio Vinícius",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Mystic0112/Landpage-for-me/issues"
   },
@@ -21,5 +28,11 @@
     "lenis": "^1.3.26",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
-  }
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.3.0"
+  },
+  "private": true,
+  "type": "module"
 }
