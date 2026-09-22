@@ -24,7 +24,8 @@ export default function About() {
     palavrasRef.current.forEach((span, i) => {
       if (!span) return
       const nivel = Math.min(1, Math.max(0, ativa - i))
-      span.style.opacity = String(0.14 + nivel * 0.86)
+      // Base 0.35: mesmo "apagada", a palavra continua legível (contraste AA).
+      span.style.opacity = String(0.35 + nivel * 0.65)
     })
   })
 

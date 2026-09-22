@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useScroll } from '../lib/scroll.jsx'
+import { prefersReducedMotion, useScroll } from '../lib/scroll.jsx'
 
 const ITENS = [
   'PHP',
@@ -24,7 +24,7 @@ export default function Marquee() {
 
   useEffect(() => {
     const track = trackRef.current
-    if (!track) return
+    if (!track || prefersReducedMotion()) return
 
     let deslocamento = 0
     let largura = track.scrollWidth / 2

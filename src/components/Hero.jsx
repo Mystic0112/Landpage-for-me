@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useScroll } from '../lib/scroll.jsx'
+import { prefersReducedMotion, useScroll } from '../lib/scroll.jsx'
 import { useParallax } from '../hooks/useParallax.js'
 import { profile } from '../data/profile.js'
 
@@ -25,6 +25,8 @@ export default function Hero() {
 
   // O conteúdo perde nitidez conforme a primeira tela sai de cena.
   useEffect(() => {
+    if (prefersReducedMotion()) return
+
     const content = contentRef.current
     const cue = cueRef.current
 

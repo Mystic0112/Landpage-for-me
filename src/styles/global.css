@@ -13,7 +13,8 @@
 
   --text: #eef1f7;
   --muted: #98a1b5;
-  --dim: #626b7e;
+  /* Claro o bastante para AA (≥4.5:1) sobre --bg em texto pequeno. */
+  --dim: #808aa0;
 
   --accent: #ff4d2e;
   --accent-soft: rgba(255, 77, 46, 0.14);
@@ -107,6 +108,30 @@ img {
 ::selection {
   background: var(--accent);
   color: #fff;
+}
+
+/* Anel de foco visível só para navegação por teclado. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 300;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.85rem;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
 }
 
 /* ---------------------------------------------------------------
@@ -203,6 +228,11 @@ img {
   .parallax-layer {
     transform: none !important;
     will-change: auto;
+  }
+
+  /* O texto do objetivo não espera a iluminação por scroll. */
+  .about-objetivo span {
+    opacity: 1 !important;
   }
 
   *,

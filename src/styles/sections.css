@@ -31,7 +31,6 @@ body.has-cursor .cursor-ring {
   height: 34px;
   margin: -17px 0 0 -17px;
   border: 1px solid var(--line-strong);
-  backdrop-filter: invert(4%);
   transition:
     width 0.35s var(--ease),
     height 0.35s var(--ease),
@@ -540,7 +539,7 @@ body.has-cursor .cursor-ring {
 }
 
 .about-objetivo span {
-  opacity: 0.14;
+  opacity: 0.35;
   transition: opacity 0.18s linear;
 }
 
@@ -729,7 +728,7 @@ body.has-cursor .cursor-ring {
   right: 1rem;
   top: 0.9rem;
   font-size: 0.64rem;
-  color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 /* ===============================================================
@@ -788,6 +787,7 @@ body.has-cursor .cursor-ring {
 
 .projeto:hover {
   border-color: var(--line-strong);
+  transform: translateY(-4px);
 }
 
 .projeto-link {
@@ -1294,6 +1294,10 @@ body.has-cursor .cursor-ring {
   .about-numeros { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.5rem; }
   .extras-grid { grid-template-columns: 1fr; }
   .hero { padding-block: 7.5rem 5rem; }
+
+  /* Com o card empilhado, o conteúdo passa de 100svh e a seta sobreporia
+     o card — melhor sem ela. */
+  .hero-cue { display: none; }
 }
 
 @media (max-width: 520px) {

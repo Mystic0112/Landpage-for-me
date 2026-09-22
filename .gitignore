@@ -35,3 +35,7 @@ pnpm-debug.log*
 # Cache
 .vite/
 *.local
+
+# Local
+.directory
+.claude/

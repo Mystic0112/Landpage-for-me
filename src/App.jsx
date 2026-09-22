@@ -15,10 +15,13 @@ import Footer from './components/Footer.jsx'
 export default function App() {
   return (
     <ScrollProvider>
+      <a className="skip-link" href="#conteudo">
+        Pular para o conteúdo
+      </a>
       <Cursor />
       <ScrollProgress />
       <Nav />
-      <main>
+      <main id="conteudo">
         <Hero />
         <Marquee />
         <About />
