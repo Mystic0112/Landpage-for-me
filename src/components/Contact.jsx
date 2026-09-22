@@ -32,7 +32,7 @@ export default function Contact() {
             Bora construir <span className="accent">algo</span> juntos?
           </h2>
           <p className="lead">
-            Aberto a estágio ou posição Júnior como Desenvolvedor Backend.
+            Aberto a posição Júnior como Desenvolvedor Backend.
             Respondo rápido — e gosto de conversar sobre arquitetura.
           </p>
         </div>

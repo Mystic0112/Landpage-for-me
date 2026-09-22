@@ -10,7 +10,7 @@ export const profile = {
   github: 'Mystic0112',
   githubUrl: 'https://github.com/Mystic0112',
   objetivo:
-    'Estudante do 4º período de Análise e Desenvolvimento de Sistemas, com formatura prevista para 2026, buscando oportunidade de estágio ou posição Júnior como Desenvolvedor Backend.',
+    'Estudante do 4º período de Análise e Desenvolvimento de Sistemas, com formatura prevista para 2026, buscando posição Júnior como Desenvolvedor Backend.',
   objetivoComplemento:
     'Foco em PHP e Laravel, com experiência prática em arquitetura de software, integrações com Inteligência Artificial e sistemas multi-serviços, unindo técnica de programação sólida a uma visão orientada à escalabilidade e boas práticas.',
 }

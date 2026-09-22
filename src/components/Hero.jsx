@@ -71,7 +71,7 @@ export default function Hero() {
       >
         <m.div className="hero-chip" variants={item}>
           <span className="pulse" />
-          Disponível para estágio ou posição Júnior
+          Disponível para posição Júnior
         </m.div>
 
         <h1 className="hero-title">
