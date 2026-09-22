@@ -1,51 +1,6 @@
 /* ===============================================================
-   Cursor + progresso
+   Progresso
    =============================================================== */
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  pointer-events: none;
-  border-radius: 999px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-body.has-cursor .cursor-dot,
-body.has-cursor .cursor-ring {
-  opacity: 1;
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  background: var(--accent);
-}
-
-.cursor-ring {
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px;
-  border: 1px solid var(--line-strong);
-  transition:
-    width 0.35s var(--ease),
-    height 0.35s var(--ease),
-    margin 0.35s var(--ease),
-    border-color 0.35s var(--ease),
-    opacity 0.3s ease;
-}
-
-.cursor-ring.is-hot {
-  width: 64px;
-  height: 64px;
-  margin: -32px 0 0 -32px;
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
 
 .scroll-progress {
   position: fixed;
@@ -60,7 +15,7 @@ body.has-cursor .cursor-ring {
   height: 100%;
   transform: scaleX(0);
   transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background: var(--accent);
 }
 
 /* ===============================================================
@@ -110,7 +65,7 @@ body.has-cursor .cursor-ring {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: linear-gradient(140deg, var(--accent), #c4231a);
+  background: var(--accent);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.85rem;
@@ -276,39 +231,6 @@ body.has-cursor .cursor-ring {
   opacity: 0.55;
 }
 
-/* Halos sem filter: blur() — o degradê radial já entrega o falloff suave e
-   um filtro de 90px numa camada de 600px re-rasterizava a GPU no scroll. */
-.hero-halo {
-  position: absolute;
-  border-radius: 999px;
-}
-
-.hero-halo-a {
-  width: min(52vw, 700px);
-  aspect-ratio: 1;
-  left: -8%;
-  top: 2%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 77, 46, 0.26) 0%,
-    rgba(255, 77, 46, 0.1) 38%,
-    transparent 70%
-  );
-}
-
-.hero-halo-b {
-  width: min(46vw, 620px);
-  aspect-ratio: 1;
-  right: -6%;
-  bottom: -2%;
-  background: radial-gradient(
-    circle,
-    rgba(124, 108, 255, 0.22) 0%,
-    rgba(124, 108, 255, 0.08) 38%,
-    transparent 70%
-  );
-}
-
 .hero-watermark {
   position: absolute;
   left: 50%;
@@ -441,26 +363,6 @@ body.has-cursor .cursor-ring {
   filter: grayscale(0.4) contrast(1.05) brightness(0.92);
 }
 
-.hero-portrait-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(5, 6, 10, 0.28),
-      transparent 32%,
-      transparent 58%,
-      rgba(5, 6, 10, 0.62)
-    ),
-    radial-gradient(
-      130% 100% at 50% 32%,
-      transparent 52%,
-      rgba(5, 6, 10, 0.45)
-    );
-}
-
 .hero-cue {
   position: absolute;
   left: 50%;
@@ -480,7 +382,7 @@ body.has-cursor .cursor-ring {
 .hero-cue-line {
   width: 1px;
   height: 52px;
-  background: linear-gradient(var(--line-strong), transparent);
+  background: var(--line-strong);
   position: relative;
   overflow: hidden;
 }
@@ -701,26 +603,9 @@ body.has-cursor .cursor-ring {
     background 0.4s var(--ease);
 }
 
-.skill-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  background: radial-gradient(
-    240px circle at var(--glow-x, 50%) var(--glow-y, 50%),
-    var(--accent-soft),
-    transparent 62%
-  );
-  transition: opacity 0.4s var(--ease);
-}
-
 .skill-card:hover {
   border-color: var(--line-strong);
   background: var(--surface-strong);
-}
-
-.skill-card:hover::before {
-  opacity: 1;
 }
 
 .skill-card.is-visible {
@@ -799,8 +684,7 @@ body.has-cursor .cursor-ring {
   padding: clamp(1.4rem, 1.5vw + 1.4vh, 2.1rem);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  background: rgba(255, 255, 255, 0.03);
   display: flex;
   flex-direction: column;
   transition:
@@ -929,22 +813,6 @@ body.has-cursor .cursor-ring {
   overflow: hidden;
 }
 
-.journey-glow {
-  position: absolute;
-  left: -14%;
-  top: 16%;
-  width: min(58vw, 740px);
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background: radial-gradient(
-    circle,
-    rgba(124, 108, 255, 0.14) 0%,
-    rgba(124, 108, 255, 0.05) 40%,
-    transparent 72%
-  );
-  pointer-events: none;
-}
-
 .journey-head {
   max-width: min(100%, 700px);
   margin-bottom: clamp(3rem, 7vw, 5rem);
@@ -969,7 +837,7 @@ body.has-cursor .cursor-ring {
 .journey-line span {
   position: absolute;
   inset: 0;
-  background: linear-gradient(var(--accent), var(--accent-2));
+  background: var(--accent);
   transform: scaleY(0);
   transform-origin: 50% 0;
 }
@@ -1020,10 +888,6 @@ body.has-cursor .cursor-ring {
    Idiomas + soft skills
    =============================================================== */
 
-.extras {
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.015), transparent);
-}
-
 .extras-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1071,7 +935,7 @@ body.has-cursor .cursor-ring {
 .idioma-barra span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform 1.3s var(--ease) 0.15s;
@@ -1114,23 +978,6 @@ body.has-cursor .cursor-ring {
   position: relative;
   overflow: hidden;
   padding-bottom: clamp(7rem, 16vh, 12rem);
-}
-
-.contact-halo {
-  position: absolute;
-  left: 50%;
-  top: 26%;
-  translate: -50% 0;
-  width: min(78vw, 920px);
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 77, 46, 0.16) 0%,
-    rgba(255, 77, 46, 0.06) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
 }
 
 .contact-inner {
@@ -1342,10 +1189,4 @@ body.has-cursor .cursor-ring {
   .contact-lista { grid-template-columns: 1fr; }
   .about-numeros { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
-}
-
-/* Em telas sem hover o cursor customizado não faz sentido. */
-@media (hover: none) {
-  .cursor-dot,
-  .cursor-ring { display: none; }
 }

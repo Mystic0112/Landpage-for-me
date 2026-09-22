@@ -92,7 +92,6 @@ export default function Nav() {
           <a
             className="nav-cta"
             href={`mailto:${profile.email}`}
-            data-cursor="hot"
           >
             Vamos conversar
           </a>

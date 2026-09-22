@@ -97,7 +97,7 @@ function ProjetoPainel({ projeto }) {
   )
 
   return (
-    <article ref={ref} className="projeto reveal" data-cursor="hot">
+    <article ref={ref} className="projeto reveal">
       {projeto.link ? (
         <a href={projeto.link} target="_blank" rel="noreferrer noopener" className="projeto-link">
           {conteudo}

@@ -24,7 +24,7 @@ const item = {
 }
 
 /**
- * Abertura em camadas: grade, halos, marca d'água e o próprio nome se movem
+ * Abertura em camadas: grade, marca d'água e o próprio nome se movem
  * em velocidades diferentes. A entrada é orquestrada pelo motion (springs);
  * o parallax contínuo segue no motor único de scroll.
  */
@@ -44,8 +44,6 @@ export default function Hero() {
   // anchor 'scroll' mantém todas as camadas no lugar com a página no topo;
   // elas só se separam conforme a rolagem avança.
   const gradeRef = useParallax({ speed: 0.12, anchor: 'scroll' })
-  const haloARef = useParallax({ speed: 0.3, anchor: 'scroll' })
-  const haloBRef = useParallax({ speed: -0.18, anchor: 'scroll' })
   const marcaRef = useParallax({ speed: 0.42, anchor: 'scroll' })
   const linha1Ref = useParallax({ speed: -0.06, anchor: 'scroll' })
   const linha2Ref = useParallax({ speed: -0.16, anchor: 'scroll' })
@@ -55,8 +53,6 @@ export default function Hero() {
     <section className="hero" id="inicio">
       <div className="hero-bg" aria-hidden="true">
         <div ref={gradeRef} className="hero-grid parallax-layer" />
-        <div ref={haloARef} className="hero-halo hero-halo-a parallax-layer" />
-        <div ref={haloBRef} className="hero-halo hero-halo-b parallax-layer" />
         <div ref={marcaRef} className="hero-watermark parallax-layer">
           &lt;?php
         </div>

@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { useTrack } from '../hooks/useTrack.js'
 import { useReveal } from '../hooks/useReveal.js'
-import { useParallax } from '../hooks/useParallax.js'
 import { trajetoria } from '../data/profile.js'
 
 /**
@@ -18,13 +17,10 @@ export default function Journey() {
     traco.style.transform = `scaleY(${preenchimento.toFixed(3)})`
   })
 
-  const fundoRef = useParallax({ speed: 0.18 })
   const cabecalhoRef = useReveal()
 
   return (
     <section className="section journey" id="trajetoria">
-      <div className="journey-glow parallax-layer" ref={fundoRef} aria-hidden="true" />
-
       <div className="shell">
         <div className="journey-head reveal" ref={cabecalhoRef}>
           <span className="eyebrow">Experiência e aperfeiçoamento</span>

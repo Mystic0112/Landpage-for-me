@@ -3,11 +3,10 @@ import { useParallax } from '../hooks/useParallax.js'
 import { useReveal } from '../hooks/useReveal.js'
 import { profile } from '../data/profile.js'
 
-/** Fechamento com halos em parallax e os contatos do currículo. */
+/** Fechamento com os contatos do currículo. */
 export default function Contact() {
   const [copiado, setCopiado] = useState(false)
 
-  const haloRef = useParallax({ speed: 0.3 })
   const marcaRef = useParallax({ speed: -0.16 })
   const cabecalhoRef = useReveal({ threshold: 0.3 })
 
@@ -23,8 +22,6 @@ export default function Contact() {
 
   return (
     <section className="section contact" id="contato">
-      <div className="contact-halo parallax-layer" ref={haloRef} aria-hidden="true" />
-
       <div className="shell contact-inner">
         <div className="reveal" ref={cabecalhoRef}>
           <span className="eyebrow">Contato</span>
@@ -38,7 +35,7 @@ export default function Contact() {
         </div>
 
         <div className="contact-acoes">
-          <a className="botao botao-primario" href={`mailto:${profile.email}`} data-cursor="hot">
+          <a className="botao botao-primario" href={`mailto:${profile.email}`}>
             {profile.email}
           </a>
           <button type="button" className="botao botao-ghost" onClick={copiarEmail}>

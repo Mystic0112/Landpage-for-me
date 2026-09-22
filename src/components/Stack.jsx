@@ -50,8 +50,6 @@ function SkillCard({ skill, indice }) {
     const y = (event.clientY - rect.top) / rect.height - 0.5
     el.style.setProperty('--tilt-x', `${(-y * 10).toFixed(2)}deg`)
     el.style.setProperty('--tilt-y', `${(x * 12).toFixed(2)}deg`)
-    el.style.setProperty('--glow-x', `${((x + 0.5) * 100).toFixed(1)}%`)
-    el.style.setProperty('--glow-y', `${((y + 0.5) * 100).toFixed(1)}%`)
   }
 
   const repousar = (event) => {
@@ -65,9 +63,7 @@ function SkillCard({ skill, indice }) {
       ref={revealRef}
       className="skill-card reveal"
       onPointerMove={inclinar}
-      onPointerLeave={repousar}
-      data-cursor="hot"
-    >
+      onPointerLeave={repousar}    >
       <span className="skill-grupo mono">{skill.grupo}</span>
       <h3>{skill.nome}</h3>
       <span className="skill-num mono">{String(indice + 1).padStart(2, '0')}</span>

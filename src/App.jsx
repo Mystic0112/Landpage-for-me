@@ -1,6 +1,5 @@
 import { LazyMotion, domAnimation } from 'motion/react'
 import { ScrollProvider } from './lib/scroll.jsx'
-import Cursor from './components/Cursor.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
@@ -20,7 +19,6 @@ export default function App() {
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
       </a>
-      <Cursor />
       <ScrollProgress />
       <Nav />
       <main id="conteudo">
