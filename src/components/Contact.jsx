@@ -38,6 +38,14 @@ export default function Contact() {
           <a className="botao botao-primario" href={`mailto:${profile.email}`}>
             {profile.email}
           </a>
+          <a
+            className="botao botao-ghost"
+            href={profile.whatsappUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Chamar no WhatsApp
+          </a>
           <button type="button" className="botao botao-ghost" onClick={copiarEmail}>
             {copiado ? 'E-mail copiado ✓' : 'Copiar e-mail'}
           </button>

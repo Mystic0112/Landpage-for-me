@@ -9,6 +9,7 @@ export const profile = {
   email: 'c9hesky@gmail.com',
   github: 'Mystic0112',
   githubUrl: 'https://github.com/Mystic0112',
+  whatsappUrl: 'https://wa.me/qr/AQTLGHIWAIEUE1?s=v',
   objetivo:
     'Estudante do 4º período de Análise e Desenvolvimento de Sistemas, com formatura prevista para 2026, buscando posição Júnior como Desenvolvedor Backend.',
   objetivoComplemento:
