@@ -1,0 +1,63 @@
+name: Deploy no GitHub Pages
+
+on:
+  push:
+    # O branch de desenvolvimento é o default do repositório hoje; main fica
+    # listado para o deploy continuar funcionando depois de um merge.
+    branches:
+      - main
+      - claude/landpage-parallax-effects-tjh5pn
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Um deploy por vez, sem cancelar o que já está no ar.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configura Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instala dependências
+        run: npm ci
+
+      - name: Gera o build
+        run: npm run build
+
+      - name: Configura o Pages
+        # enablement liga o GitHub Pages automaticamente na primeira execução.
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Publica o artefato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publica no Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

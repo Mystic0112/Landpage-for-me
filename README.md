@@ -76,5 +76,13 @@ src/
 
 ## Publicação
 
-O build é estático e `base` está como `./`, então `dist/` pode ser publicado
-direto no GitHub Pages, Netlify, Vercel ou qualquer hospedagem de arquivos.
+O deploy é automático: a cada push no branch padrão, o workflow
+`.github/workflows/deploy.yml` roda `npm ci && npm run build` e publica o
+`dist/` no GitHub Pages.
+
+- **Site:** https://mystic0112.github.io/Landpage-for-me/
+- Para rodar o deploy manualmente: aba **Actions** → *Deploy no GitHub Pages* →
+  *Run workflow*.
+
+Como o `base` do Vite está em `./`, o build também funciona em Netlify, Vercel
+ou qualquer hospedagem de arquivos estáticos, sem ajuste de caminhos.
