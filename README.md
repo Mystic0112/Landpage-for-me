@@ -84,5 +84,10 @@ O deploy é automático: a cada push no branch padrão, o workflow
 - Para rodar o deploy manualmente: aba **Actions** → *Deploy no GitHub Pages* →
   *Run workflow*.
 
+> **Passo único de ativação:** em **Settings → Pages → Build and deployment**,
+> selecione *Source: GitHub Actions*. O token do Actions não tem permissão para
+> criar o site do Pages sozinho, então essa primeira ativação é manual. Depois
+> disso todo push no branch padrão publica automaticamente.
+
 Como o `base` do Vite está em `./`, o build também funciona em Netlify, Vercel
 ou qualquer hospedagem de arquivos estáticos, sem ajuste de caminhos.
