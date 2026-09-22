@@ -38,8 +38,8 @@ export default function Journey() {
             <span ref={tracoRef} />
           </div>
 
-          {trajetoria.map((item, i) => (
-            <JourneyItem key={item.titulo} item={item} indice={i} />
+          {trajetoria.map((item) => (
+            <JourneyItem key={item.titulo} item={item} />
           ))}
         </div>
       </div>
@@ -47,18 +47,15 @@ export default function Journey() {
   )
 }
 
-function JourneyItem({ item, indice }) {
+function JourneyItem({ item }) {
   const ref = useReveal({ threshold: 0.4 })
-  const parallaxRef = useParallax({ speed: indice % 2 === 0 ? -0.04 : 0.04 })
 
   return (
-    <div className="parallax-layer journey-slot" ref={parallaxRef}>
-      <article ref={ref} className="journey-item reveal">
-        <span className="journey-marker" aria-hidden="true" />
-        <span className="journey-periodo mono">{item.periodo}</span>
-        <h3>{item.titulo}</h3>
-        <p>{item.detalhe}</p>
-      </article>
-    </div>
+    <article ref={ref} className="journey-item reveal">
+      <span className="journey-marker" aria-hidden="true" />
+      <span className="journey-periodo mono">{item.periodo}</span>
+      <h3>{item.titulo}</h3>
+      <p>{item.detalhe}</p>
+    </article>
   )
 }

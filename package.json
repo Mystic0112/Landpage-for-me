@@ -26,6 +26,7 @@
   "homepage": "https://github.com/Mystic0112/Landpage-for-me#readme",
   "dependencies": {
     "lenis": "^1.3.26",
+    "motion": "^13.4.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },

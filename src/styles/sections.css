@@ -79,9 +79,10 @@ body.has-cursor .cursor-ring {
   border-bottom: 1px solid transparent;
 }
 
+/* Sem backdrop-filter: re-desfocar a barra a cada frame de scroll custava
+   ~17ms de p95 na medição. O fundo mais opaco mantém a legibilidade. */
 .nav.is-stuck {
-  background: rgba(5, 6, 10, 0.72);
-  backdrop-filter: blur(14px);
+  background: rgba(7, 8, 14, 0.92);
   border-bottom-color: var(--line);
   padding-block: 0.7rem;
 }
@@ -275,26 +276,37 @@ body.has-cursor .cursor-ring {
   opacity: 0.55;
 }
 
+/* Halos sem filter: blur() — o degradê radial já entrega o falloff suave e
+   um filtro de 90px numa camada de 600px re-rasterizava a GPU no scroll. */
 .hero-halo {
   position: absolute;
   border-radius: 999px;
-  filter: blur(90px);
 }
 
 .hero-halo-a {
-  width: min(46vw, 620px);
+  width: min(52vw, 700px);
   aspect-ratio: 1;
-  left: -6%;
-  top: 6%;
-  background: radial-gradient(circle, rgba(255, 77, 46, 0.4), transparent 68%);
+  left: -8%;
+  top: 2%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 77, 46, 0.26) 0%,
+    rgba(255, 77, 46, 0.1) 38%,
+    transparent 70%
+  );
 }
 
 .hero-halo-b {
-  width: min(40vw, 540px);
+  width: min(46vw, 620px);
   aspect-ratio: 1;
-  right: -4%;
-  bottom: 2%;
-  background: radial-gradient(circle, rgba(124, 108, 255, 0.34), transparent 68%);
+  right: -6%;
+  bottom: -2%;
+  background: radial-gradient(
+    circle,
+    rgba(124, 108, 255, 0.22) 0%,
+    rgba(124, 108, 255, 0.08) 38%,
+    transparent 70%
+  );
 }
 
 .hero-watermark {
@@ -386,56 +398,67 @@ body.has-cursor .cursor-ring {
   font-size: clamp(1rem, 1.5vw, 1.15rem);
 }
 
-.hero-card {
+/* Retrato: elemento de composição, não avatar de template. A moldura accent
+   deslocada e o degradê que funde o fundo cinza da foto ao dark da página
+   fazem a imagem pertencer à paleta. */
+.hero-title-inner {
+  display: block;
+}
+
+.hero-portrait {
   position: relative;
   z-index: 2;
   grid-column: 2;
   grid-row: 2 / span 2;
-  border: 1px solid var(--line);
+  justify-self: end;
+  width: min(100%, 380px);
+}
+
+.hero-portrait::before {
+  content: '';
+  position: absolute;
+  inset: 16px -16px -16px 16px;
+  border: 1px solid var(--accent);
   border-radius: var(--radius);
-  background: linear-gradient(160deg, rgba(20, 24, 36, 0.92), rgba(9, 11, 19, 0.92));
-  box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.95);
-  overflow: hidden;
-  backdrop-filter: blur(6px);
+  opacity: 0.45;
+  pointer-events: none;
 }
 
-.hero-card-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.7rem 0.95rem;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.hero-card-bar span {
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: var(--line-strong);
-}
-
-.hero-card-bar span:first-child { background: #ff5f57; }
-.hero-card-bar span:nth-child(2) { background: #febc2e; }
-.hero-card-bar span:nth-child(3) { background: #28c840; }
-
-.hero-card-bar em {
-  margin-left: 0.6rem;
-  font-style: normal;
-  font-size: 0.66rem;
-  color: var(--dim);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.hero-card pre {
+.hero-portrait-frame {
+  position: relative;
   margin: 0;
-  padding: 1.1rem 1.25rem 1.4rem;
-  font-size: clamp(0.66rem, 0.85vw, 0.78rem);
-  line-height: 1.75;
-  color: #cbd3e3;
-  overflow-x: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-lift);
+  box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.95);
+}
+
+.hero-portrait-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(0.4) contrast(1.05) brightness(0.92);
+}
+
+.hero-portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 6, 10, 0.28),
+      transparent 32%,
+      transparent 58%,
+      rgba(5, 6, 10, 0.62)
+    ),
+    radial-gradient(
+      130% 100% at 50% 32%,
+      transparent 52%,
+      rgba(5, 6, 10, 0.45)
+    );
 }
 
 .hero-cue {
@@ -908,13 +931,17 @@ body.has-cursor .cursor-ring {
 
 .journey-glow {
   position: absolute;
-  left: -10%;
-  top: 20%;
-  width: min(50vw, 640px);
+  left: -14%;
+  top: 16%;
+  width: min(58vw, 740px);
   aspect-ratio: 1;
   border-radius: 999px;
-  filter: blur(110px);
-  background: radial-gradient(circle, rgba(124, 108, 255, 0.22), transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(124, 108, 255, 0.14) 0%,
+    rgba(124, 108, 255, 0.05) 40%,
+    transparent 72%
+  );
   pointer-events: none;
 }
 
@@ -1092,13 +1119,17 @@ body.has-cursor .cursor-ring {
 .contact-halo {
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: 26%;
   translate: -50% 0;
-  width: min(70vw, 820px);
+  width: min(78vw, 920px);
   aspect-ratio: 1;
   border-radius: 999px;
-  filter: blur(120px);
-  background: radial-gradient(circle, rgba(255, 77, 46, 0.26), transparent 66%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 77, 46, 0.16) 0%,
+    rgba(255, 77, 46, 0.06) 40%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -1252,8 +1283,13 @@ body.has-cursor .cursor-ring {
   .hero-content { grid-template-columns: 1fr; }
   .hero-title,
   .hero-meta,
-  .hero-card { grid-column: 1; }
-  .hero-card { grid-row: auto; margin-top: 2.5rem; }
+  .hero-portrait { grid-column: 1; }
+  .hero-portrait {
+    grid-row: auto;
+    justify-self: start;
+    margin-top: 2.5rem;
+    width: min(72vw, 300px);
+  }
 
   .stack-grid { grid-template-columns: repeat(3, 1fr); }
   .about-grid { grid-template-columns: 1fr; }
@@ -1305,7 +1341,6 @@ body.has-cursor .cursor-ring {
   .stack-grid { grid-template-columns: 1fr; }
   .contact-lista { grid-template-columns: 1fr; }
   .about-numeros { grid-template-columns: 1fr; }
-  .hero-card pre { font-size: 0.62rem; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 

@@ -1,3 +1,4 @@
+import { LazyMotion, domAnimation } from 'motion/react'
 import { ScrollProvider } from './lib/scroll.jsx'
 import Cursor from './components/Cursor.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
@@ -14,6 +15,7 @@ import Footer from './components/Footer.jsx'
 
 export default function App() {
   return (
+    <LazyMotion features={domAnimation} strict>
     <ScrollProvider>
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
@@ -33,5 +35,6 @@ export default function App() {
       </main>
       <Footer />
     </ScrollProvider>
+    </LazyMotion>
   )
 }

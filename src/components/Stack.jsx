@@ -2,11 +2,10 @@ import { useParallax } from '../hooks/useParallax.js'
 import { useReveal } from '../hooks/useReveal.js'
 import { skills } from '../data/profile.js'
 
-const VELOCIDADES = [-0.05, 0.07, -0.11, 0.04]
-
 /**
- * Grade de tecnologias: cada coluna sobe numa velocidade própria, então a
- * grade "respira" durante a rolagem em vez de se mover em bloco.
+ * Grade de tecnologias com reveal em cascata e tilt no hover.
+ * O parallax por cartão foi removido: eram 12 camadas de composição a mais
+ * por um deslocamento quase imperceptível.
  */
 export default function Stack() {
   const fundoRef = useParallax({ speed: 0.24 })
@@ -42,12 +41,6 @@ export default function Stack() {
 }
 
 function SkillCard({ skill, indice }) {
-  // Abaixo de 640px a grade vira coluna única: o parallax por coluna só
-  // desalinharia os cartões, então fica desligado.
-  const parallaxRef = useParallax({
-    speed: VELOCIDADES[indice % VELOCIDADES.length],
-    disableBelow: 640,
-  })
   const revealRef = useReveal({ threshold: 0.3 })
 
   const inclinar = (event) => {
@@ -68,18 +61,16 @@ function SkillCard({ skill, indice }) {
   }
 
   return (
-    <div className="parallax-layer" ref={parallaxRef}>
-      <article
-        ref={revealRef}
-        className="skill-card reveal"
-        onPointerMove={inclinar}
-        onPointerLeave={repousar}
-        data-cursor="hot"
-      >
-        <span className="skill-grupo mono">{skill.grupo}</span>
-        <h3>{skill.nome}</h3>
-        <span className="skill-num mono">{String(indice + 1).padStart(2, '0')}</span>
-      </article>
-    </div>
+    <article
+      ref={revealRef}
+      className="skill-card reveal"
+      onPointerMove={inclinar}
+      onPointerLeave={repousar}
+      data-cursor="hot"
+    >
+      <span className="skill-grupo mono">{skill.grupo}</span>
+      <h3>{skill.nome}</h3>
+      <span className="skill-num mono">{String(indice + 1).padStart(2, '0')}</span>
+    </article>
   )
 }

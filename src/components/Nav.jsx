@@ -14,18 +14,37 @@ export default function Nav() {
   useEffect(() => {
     const header = headerRef.current
     let ultimaAtiva = ''
+    let topos = []
+    let alturaMedida = 0
 
-    return scroll.subscribe(({ y, vh }) => {
+    // Medir getBoundingClientRect de 6 seções a cada frame forçava layout
+    // durante o scroll inteiro. Os topos são cacheados e só remedidos quando
+    // a altura do documento muda (fontes/imagens) ou no resize.
+    const medir = () => {
+      topos = secoes.map((secao) => {
+        const el = document.getElementById(secao.id)
+        return {
+          id: secao.id,
+          top: el ? el.getBoundingClientRect().top + window.scrollY : 0,
+        }
+      })
+    }
+    medir()
+    window.addEventListener('resize', medir)
+
+    const unsubscribe = scroll.subscribe(({ y, vh, docHeight }) => {
+      if (docHeight !== alturaMedida) {
+        alturaMedida = docHeight
+        medir()
+      }
+
       if (header) header.classList.toggle('is-stuck', y > vh * 0.5)
 
       const linha = y + vh * 0.45
-      let atual = secoes[0].id
+      let atual = topos[0]?.id
 
-      for (const secao of secoes) {
-        const el = document.getElementById(secao.id)
-        if (!el) continue
-        const topo = el.getBoundingClientRect().top + y
-        if (linha >= topo) atual = secao.id
+      for (const topo of topos) {
+        if (linha >= topo.top) atual = topo.id
       }
 
       if (atual !== ultimaAtiva) {
@@ -33,6 +52,11 @@ export default function Nav() {
         setAtiva(atual)
       }
     })
+
+    return () => {
+      unsubscribe()
+      window.removeEventListener('resize', medir)
+    }
   }, [scroll])
 
   const irPara = (event, id) => {

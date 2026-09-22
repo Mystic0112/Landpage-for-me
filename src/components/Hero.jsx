@@ -1,16 +1,45 @@
-import { useEffect, useRef } from 'react'
-import { prefersReducedMotion, useScroll } from '../lib/scroll.jsx'
+import {
+  m,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'motion/react'
 import { useParallax } from '../hooks/useParallax.js'
 import { profile } from '../data/profile.js'
 
+const FOTO = `${import.meta.env.BASE_URL}helio.webp`
+
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 26 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 110, damping: 20 },
+  },
+}
+
 /**
  * Abertura em camadas: grade, halos, marca d'água e o próprio nome se movem
- * em velocidades diferentes, criando a profundidade principal da página.
+ * em velocidades diferentes. A entrada é orquestrada pelo motion (springs);
+ * o parallax contínuo segue no motor único de scroll.
  */
 export default function Hero() {
-  const scroll = useScroll()
-  const contentRef = useRef(null)
-  const cueRef = useRef(null)
+  const reduce = useReducedMotion()
+  const { scrollY } = useScroll()
+
+  // Saída da primeira tela: só opacity (composited) — nada de blur por frame.
+  const conteudoOpacity = useTransform(() => {
+    const vh = window.innerHeight
+    return Math.max(0.05, 1 - (scrollY.get() / (vh * 0.9)) * 0.95)
+  })
+  const cueOpacity = useTransform(() =>
+    Math.max(0, 1 - scrollY.get() / (window.innerHeight * 0.3)),
+  )
 
   // anchor 'scroll' mantém todas as camadas no lugar com a página no topo;
   // elas só se separam conforme a rolagem avança.
@@ -20,27 +49,7 @@ export default function Hero() {
   const marcaRef = useParallax({ speed: 0.42, anchor: 'scroll' })
   const linha1Ref = useParallax({ speed: -0.06, anchor: 'scroll' })
   const linha2Ref = useParallax({ speed: -0.16, anchor: 'scroll' })
-  const cardRef = useParallax({ speed: -0.22, rotate: -2.5, anchor: 'scroll', disableBelow: 860 })
-  const chipRef = useParallax({ speed: -0.3, anchor: 'scroll', disableBelow: 860 })
-
-  // O conteúdo perde nitidez conforme a primeira tela sai de cena.
-  useEffect(() => {
-    if (prefersReducedMotion()) return
-
-    const content = contentRef.current
-    const cue = cueRef.current
-
-    return scroll.subscribe(({ y, vh }) => {
-      const saida = Math.min(1, Math.max(0, y / (vh * 0.9)))
-      if (content) {
-        content.style.opacity = String(1 - saida * 0.95)
-        content.style.filter = `blur(${(saida * 7).toFixed(2)}px)`
-      }
-      if (cue) {
-        cue.style.opacity = String(Math.max(0, 1 - y / (vh * 0.3)))
-      }
-    })
-  }, [scroll])
+  const retratoRef = useParallax({ speed: -0.22, rotate: -2, anchor: 'scroll', disableBelow: 860 })
 
   return (
     <section className="hero" id="inicio">
@@ -53,52 +62,62 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hero-content shell" ref={contentRef}>
-        <div ref={chipRef} className="hero-chip parallax-layer">
+      <m.div
+        className="hero-content shell"
+        variants={container}
+        initial={reduce ? false : 'hidden'}
+        animate="visible"
+        style={reduce ? undefined : { opacity: conteudoOpacity }}
+      >
+        <m.div className="hero-chip" variants={item}>
           <span className="pulse" />
           Disponível para estágio ou posição Júnior
-        </div>
+        </m.div>
 
         <h1 className="hero-title">
           <span ref={linha1Ref} className="hero-title-line parallax-layer">
-            Hélio
+            <m.span className="hero-title-inner" variants={item}>
+              Hélio
+            </m.span>
           </span>
           <span ref={linha2Ref} className="hero-title-line hero-title-outline parallax-layer">
-            Vinícius
+            <m.span className="hero-title-inner" variants={item}>
+              Vinícius
+            </m.span>
           </span>
         </h1>
 
-        <div className="hero-meta">
+        <m.div className="hero-meta" variants={item}>
           <p className="hero-role mono">{profile.cargo}</p>
           <p className="hero-sub">
             Backend em PHP e Laravel, integrações com Inteligência Artificial e
             sistemas multi-serviços — de <span className="accent">{profile.local}</span>.
           </p>
+        </m.div>
+
+        <div ref={retratoRef} className="hero-portrait parallax-layer">
+          <m.figure className="hero-portrait-frame" variants={item}>
+            <img
+              src={FOTO}
+              alt="Retrato de Hélio Vinícius, desenvolvedor PHP e Laravel"
+              width="800"
+              height="1047"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </m.figure>
         </div>
+      </m.div>
 
-        <div ref={cardRef} className="hero-card parallax-layer" aria-hidden="true">
-          <div className="hero-card-bar">
-            <span /> <span /> <span />
-            <em className="mono">CoachKit/app/Services/TreinoService.php</em>
-          </div>
-          <pre className="mono">
-{`public function gerar(Aluno $aluno): Plano
-{
-    $contexto = $this->perfil->montar($aluno);
-
-    return $this->ia
-        ->viaMcp('coachkit.treinos')
-        ->sugerir($contexto)
-        ->paraRevisaoDoProfissional();
-}`}
-          </pre>
-        </div>
-      </div>
-
-      <div ref={cueRef} className="hero-cue" aria-hidden="true">
+      <m.div
+        className="hero-cue"
+        aria-hidden="true"
+        style={reduce ? undefined : { opacity: cueOpacity }}
+      >
         <span className="mono">role</span>
         <span className="hero-cue-line" />
-      </div>
+      </m.div>
     </section>
   )
 }

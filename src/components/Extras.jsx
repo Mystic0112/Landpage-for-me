@@ -1,11 +1,9 @@
 import { useReveal } from '../hooks/useReveal.js'
-import { useParallax } from '../hooks/useParallax.js'
 import { idiomas, softSkills } from '../data/profile.js'
 
 /** Idiomas com barras animadas na entrada + soft skills em cápsulas. */
 export default function Extras() {
   const cabecalhoRef = useReveal()
-  const capsulasRef = useParallax({ speed: -0.07 })
 
   return (
     <section className="section extras">
@@ -27,7 +25,7 @@ export default function Extras() {
           <span className="eyebrow">Soft skills</span>
           <h2 className="extras-title">Como eu trabalho em time.</h2>
 
-          <ul className="soft-skills parallax-layer" ref={capsulasRef}>
+          <ul className="soft-skills">
             {softSkills.map((skill, i) => (
               <SoftSkill key={skill} skill={skill} indice={i} />
             ))}
