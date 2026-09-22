@@ -2,11 +2,8 @@ name: Deploy no GitHub Pages
 
 on:
   push:
-    # O branch de desenvolvimento é o default do repositório hoje; main fica
-    # listado para o deploy continuar funcionando depois de um merge.
     branches:
       - main
-      - claude/landpage-parallax-effects-tjh5pn
   workflow_dispatch:
 
 permissions:
